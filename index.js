@@ -3,7 +3,6 @@ var express = require('express');
 var pkg = require(path.join(__dirname, 'package.json'));
 var twitter = require('twitter-text');
 var program = require('commander');
-var bodyParser = require('body-parser');
 var winston = require('winston');
 var logger = new (winston.Logger)({
     transports: [
@@ -13,6 +12,7 @@ var logger = new (winston.Logger)({
 
 var DEFAULT_PORT = 8000;
 var DEFAULT_HOST = '127.0.0.1';
+var MAX_BODY_LENGTH = 64 * 1024;
 
 
 program
@@ -39,7 +39,21 @@ var port = program.port || DEFAULT_PORT;
 var host = program.host || DEFAULT_HOST;
 var app = express();
 
-app.use(bodyParser.text({ type: '*/*' }));
+app.use(function(req, res, next) {
+    var data = '';
+    req.setEncoding('utf8');
+    req.on('data', function(chunk) {
+        if ((data.length + chunk.length) > MAX_BODY_LENGTH) {
+            next(error(400, 'Request body too large'));
+        }
+
+        data += chunk;
+    });
+    req.on('end', function() {
+        req.body = data;
+        next();
+    });
+});
 app.post('/symbols-left', function(req, res) {
     res.send('' + left(req.body));
 });
