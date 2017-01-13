@@ -50,6 +50,9 @@ app.get('/symbols-left', function(req, res) {
 
     res.send('' + left(req.query.message));
 });
+app.post('/message-length', function(req, res) {
+    res.send('' + twitter.getTweetLength(req.body));
+});
 app.use(function(req, res, next) {
     throw error(404);
 });
