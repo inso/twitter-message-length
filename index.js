@@ -41,14 +41,14 @@ var app = express();
 
 app.use(bodyParser.text({ type: '*/*' }));
 app.post('/symbols-left', function(req, res) {
-    res.send("" + left(req.body));
+    res.send('' + left(req.body));
 });
 app.get('/symbols-left', function(req, res) {
     if (!req.query.message) {
         throw error(400, 'Missing "message" query parameter');
     }
 
-    res.send("" + left(req.query.message));
+    res.send('' + left(req.query.message));
 });
 app.use(function(req, res, next) {
     throw error(404);
