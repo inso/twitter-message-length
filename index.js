@@ -5,11 +5,14 @@ var twitter = require('twitter-text');
 var program = require('commander');
 var bodyParser = require('body-parser');
 
+var DEFAULT_PORT = 8000;
+var DEFAULT_HOST = '127.0.0.1';
+
 
 program
     .version(pkg.version)
-    .option('-p, --port [port]', 'Port on which to listen to (defaults to 8000)', parseInt)
-    .option('-h, --host [host]', 'Host on which to listen to (defaults to localhost)')
+    .option('-p, --port [port]', 'Port on which to listen to (defaults to ' + DEFAULT_PORT + ')', parseInt)
+    .option('-h, --host [host]', 'Host on which to listen to (defaults to ' + DEFAULT_HOST + ')')
     .parse(process.argv)
 ;
 
@@ -22,8 +25,8 @@ var error = function (status) {
 var left = function (message) {
     return 140 - twitter.getTweetLength(message);
 };
-var port = program.port || 8000;
-var host = program.host || 'localhost';
+var port = program.port || DEFAULT_PORT;
+var host = program.host || DEFAULT_HOST;
 var app = express();
 
 app.use(bodyParser.text({ type: '*/*' }));
