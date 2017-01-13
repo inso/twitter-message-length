@@ -1,7 +1,7 @@
 var path = require('path');
 var express = require('express');
 var pkg = require(path.join(__dirname, 'package.json'));
-var twitter = require('twitter-text')
+var twitter = require('twitter-text');
 var program = require('commander');
 var bodyParser = require('body-parser');
 
