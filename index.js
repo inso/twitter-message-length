@@ -13,6 +13,7 @@ var logger = new (winston.Logger)({
 var DEFAULT_PORT = 8000;
 var DEFAULT_HOST = '127.0.0.1';
 var MAX_BODY_LENGTH = 64 * 1024;
+var MAX_MESSAGE_LENGTH = 280;
 
 
 program
@@ -33,7 +34,7 @@ var error = function (status, message) {
     return e;
 };
 var left = function (message) {
-    return 140 - twitter.getTweetLength(message);
+    return MAX_MESSAGE_LENGTH - twitter.getTweetLength(message);
 };
 var port = program.port || DEFAULT_PORT;
 var host = program.host || DEFAULT_HOST;
