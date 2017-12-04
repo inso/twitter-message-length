@@ -68,6 +68,13 @@ app.get('/symbols-left', function(req, res) {
 app.post('/message-length', function(req, res) {
     res.send('' + twitter.getTweetLength(req.body));
 });
+app.get('/message-length', function(req, res) {
+    if (!req.query.message) {
+        throw error(400, 'Missing "message" query parameter');
+    }
+
+    res.send('' + twitter.getTweetLength(req.query.message));
+});
 app.use(function(req, res, next) {
     throw error(404);
 });

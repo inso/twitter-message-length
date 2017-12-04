@@ -6,6 +6,7 @@ Microservice used for text length calculation based on Twitter message rules.
     POST /symbols-left # message provided using request body
 Returns number of characters left based on Twitter message limit.
 
+    GET /message-length?message=%MESSAGE TEXT%
     POST /message-length # message provided using request body
 Returns message length.
 
